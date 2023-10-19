@@ -1,7 +1,7 @@
 import datosJson from "../data/data.json" assert { type: "json" };
 import { Gift } from "./clases.js";
 
-
+let datos = JSON.parse(localStorage.getItem("giftData")) || datosJson;
 
 const cuerpoTabla = document.querySelector("#cuerpo-tabla");
 const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
@@ -32,6 +32,7 @@ const giftUpdate = (e) => {
 
 
 
+  guardarEnLocalStorage();
   cargarTabla();
   myModal.hide();
 };
@@ -71,7 +72,7 @@ const agregarGift = (event) => {
 
   datos.push(new Gift(id, gift, tipo, tiempo, precio, imagen));
 
-
+  guardarEnLocalStorage();
   document.querySelector("#formGift").reset();
   cargarTabla();
 };
@@ -85,11 +86,15 @@ window.borrarGift = (id) => {
 
   if (validar) {
     datos.splice(index, 1);
+    guardarEnLocalStorage();
     cargarTabla();
   }
 };
 
 
+const guardarEnLocalStorage = () => {
+  localStorage.setItem("giftData", JSON.stringify(datos));
+};
 
 cargarTabla();
 
