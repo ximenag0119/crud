@@ -1,5 +1,7 @@
-import datos from "../data/data.json" assert { type: "json" };
+import datosJson from "../data/data.json" assert { type: "json" };
 import { Gift } from "./clases.js";
+
+
 
 const cuerpoTabla = document.querySelector("#cuerpo-tabla");
 const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
@@ -7,7 +9,6 @@ const myModal = new bootstrap.Modal(document.getElementById("modalGift"));
 let idGiftUpdate = null;
 
 window.mostrarModal = (id) => {
-  console.log(id);
   idGiftUpdate = id;
   let index = datos.findIndex((item) => item.id == idGiftUpdate);
 
@@ -28,6 +29,8 @@ const giftUpdate = (e) => {
   datos[index].tiempo = document.querySelector("#tiempoModal").value;
   datos[index].precio = document.querySelector("#precioModal").value;
   datos[index].imagen = document.querySelector("#imagenModal").value;
+
+
 
   cargarTabla();
   myModal.hide();
@@ -58,7 +61,7 @@ const cargarTabla = () => {
 const agregarGift = (event) => {
   event.preventDefault();
 
-  let id = datos.at(-1).id + 1;
+  let id = datos.length > 0 ? datos[datos.length - 1].id + 1 : 1;
   let gift = document.querySelector("#gift").value;
   let tipo = document.querySelector("#tipo").value;
   let tiempo = document.querySelector("#tiempo").value;
@@ -66,6 +69,8 @@ const agregarGift = (event) => {
   let imagen = document.querySelector("#imagen").value;
 
   datos.push(new Gift(id, gift, tipo, tiempo, precio, imagen));
+
+
   document.querySelector("#formGift").reset();
   cargarTabla();
 };
@@ -82,6 +87,8 @@ window.borrarGift = (id) => {
     cargarTabla();
   }
 };
+
+
 
 cargarTabla();
 
